@@ -1,0 +1,33 @@
+{
+	"name": "Wait activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait for 5 sec",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 5
+				}
+			},
+			{
+				"name": "Wait for 10 sec",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Wait for 5 sec",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			}
+		],
+		"annotations": []
+	}
+}
