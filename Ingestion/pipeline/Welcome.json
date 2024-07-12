@@ -15,10 +15,34 @@
 					"variableName": "msg",
 					"value": "Welcome to Azure world"
 				}
+			},
+			{
+				"name": "Get Data",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Message",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "qry",
+					"value": "Source = SQL Database;\nSink = Azure Storage account"
+				}
 			}
 		],
 		"variables": {
 			"msg": {
+				"type": "String"
+			},
+			"qry": {
 				"type": "String"
 			}
 		},
