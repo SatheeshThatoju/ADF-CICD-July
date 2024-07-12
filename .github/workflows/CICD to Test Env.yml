@@ -1,5 +1,5 @@
-name: CICD with client secret
-run-name: CICD with client secret
+name: CICD to Test Env with Secret
+run-name: CICD to Test Env with Secret
 
 on:
   workflow_dispatch:
