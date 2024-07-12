@@ -1,6 +1,5 @@
-name: CICD with client secret
-run-name: CICD with client secret
-
+name: CICD to Prod Env with Secret
+run-name: CICD to prod Env with Secret
 on:
   workflow_dispatch:
   # push:
@@ -65,7 +64,7 @@ jobs:
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: rg_satheesh
-          dataFactoryName: testsatheesh
+          dataFactoryName: prodadfjul
           armTemplateFile: ./armtemplates/ARMTemplateForFactory.json
-          armTemplateParametersFile: ./armtemplates/ARMTemplateParametersForFactory.json
+          armTemplateParametersFile: ./ProdARMTemplateParametersForFactory.json
 ################### End of workflow file ###################
