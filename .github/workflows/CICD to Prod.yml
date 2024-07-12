@@ -1,5 +1,5 @@
-name: CICD to Prod Env
-run-name: CICD to prod Env
+name: CICD to Prod Env with Secret
+run-name: CICD to prod Env with Secret
 on:
   workflow_dispatch:
   # push:
