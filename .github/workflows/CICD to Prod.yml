@@ -1,0 +1,70 @@
+name: CICD to Prod Env
+run-name: CICD to prod Env
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
+
+jobs:
+  Build_ARM_templates:
+    name: Build ARM templates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.5
+
+      - name: Export ARM templates
+        id: export
+        uses: ./.github/actions/data-factory-export-action
+        with:
+          path: Ingestion
+          id: /subscriptions/cf48e494-b896-49b6-8dc8-2c65131608d5/resourceGroups/rg_satheesh/providers/Microsoft.DataFactory/factories/devadfjul
+      
+      - name: Upload ARM templates artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: armtemplates
+          path: ${{steps.export.outputs.arm-template-directory }}
+          if-no-files-found: error
+
+  Deploy_to_TEST_ADF:
+    needs: [Build_ARM_templates]
+    name: Deploy to TEST ADF
+    runs-on: ubuntu-latest
+    environment: TEST
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.5
+
+      - name: Azure login
+        shell: pwsh
+        run: |
+          Install-Module Az -Force
+          
+          $TenantId = '${{ secrets.AZURE_SPN_TENET }}'
+          $ApplicationId = '${{ secrets.AZURE_SPN_APP_ID_ACC }}'
+          $ClientSecret = '${{ secrets.AZURE_SPN_CLIENT_SECRET }}'
+          
+          $SecureStringPassword = ConvertTo-SecureString -String $ClientSecret -AsPlainText -Force
+          $PSCredential = New-Object System.Management.Automation.PSCredential($ApplicationId, $SecureStringPassword)
+          
+          Connect-AzAccount -ServicePrincipal -Credential $PSCredential -Tenant $TenantId
+
+          az login --service-principal -u $ApplicationId --tenant $TenantId -p $ClientSecret
+               
+                      
+      - name: Download ARM templates artifact
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: armtemplates
+          path: armtemplates
+
+      - name: Deploy to TEST
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: rg_satheesh
+          dataFactoryName: prodadfjul
+          armTemplateFile: ./armtemplates/ARMTemplateForFactory.json
+          armTemplateParametersFile: ./armtemplates/ARMTemplateParametersForFactory.json
+################### End of workflow file ###################
