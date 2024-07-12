@@ -65,6 +65,6 @@ jobs:
         with:
           resourceGroupName: rg_satheesh
           dataFactoryName: prodadfjul
-          armTemplateFile: ./armtemplates/ARMTemplateForFactory.json
-          armTemplateParametersFile: ./armtemplates/ARMTemplateParametersForFactory.json
+          armTemplateFile: ./armtemplates/ProdARMTemplateForFactory.json
+          armTemplateParametersFile: ./armtemplates/ProdARMTemplateParametersForFactory.json
 ################### End of workflow file ###################
