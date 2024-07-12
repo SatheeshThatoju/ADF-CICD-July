@@ -1,0 +1,27 @@
+{
+	"name": "New Deployment",
+	"properties": {
+		"activities": [
+			{
+				"name": "Message",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "hlo",
+					"value": "Hello "
+				}
+			}
+		],
+		"variables": {
+			"hlo": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
