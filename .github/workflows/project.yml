@@ -1,1 +1,68 @@
+name: CICD with client certificate
+run-name: CICD with client certificate
+on:
+  workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
 
+jobs:
+  Build_ARM_templates:
+    name: Build ARM templates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.2.0
+
+      - name: Export ARM templates
+        id: export
+        uses: ./.github/actions/data-factory-export-action
+        with:
+          path: Ingestion
+          id: /subscriptions/cf48e494-b896-49b6-8dc8-2c65131608d5/resourceGroups/rg_satheesh/providers/Microsoft.DataFactory/factories/devadfjul
+      
+      - name: Upload ARM templates artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: armtemplates
+          path: ${{steps.export.outputs.arm-template-directory }}
+          if-no-files-found: error
+
+  Deploy_to_TEST_ADF:
+    # if: ${{ github.ref == 'refs/heads/uat' || github.ref_name == 'uat' }}
+    needs: [Build_ARM_templates]
+    name: Deploy to TEST ADF
+    runs-on: ubuntu-latest
+    environment: TEST
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.2.0
+
+      - name: retrive SPN Certificate and private key - PEM file - from github secrets and save file
+        env: 
+          spn_certificate: ${{secrets.AZURE_SPN_CERTIFICATE_ACC}}
+        run: |
+          touch ./temp_cert_and_private_key_acc.pem
+          echo "$spn_certificate" >> ./temp_cert_and_private_key_acc.pem
+          
+      - name: Azure login
+        shell: pwsh
+        run: |
+          Install-Module Az -Force
+          Connect-AzAccount -ServicePrincipal -ApplicationId ${{secrets.AZURE_SPN_APP_ID_ACC}} -TenantId ${{secrets.AZURE_SPN_TENET}} -CertificatePath './temp_cert_and_private_key_acc.pem' -Subscription 'cf48e494-b896-49b6-8dc8-2c65131608d5'
+          az login --service-principal -u ${{secrets.AZURE_SPN_APP_ID_ACC}} -p temp_cert_and_private_key_acc.pem --tenant ${{secrets.AZURE_SPN_TENET}}
+          
+      - name: Download ARM templates artifact
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: armtemplates
+          path: armtemplates
+
+      - name: Deploy to TEST
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: rg_satheesh
+          dataFactoryName: testsatheesh
+          armTemplateFile: ./armtemplates/ARMTemplateForFactory.json
+          armTemplateParametersFile: ./ARMTemplateParametersForFactory.json
+################### End of workflow file ###################
