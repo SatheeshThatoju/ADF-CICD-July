@@ -30,7 +30,7 @@ jobs:
 
   Deploy_to_TEST_ADF:
     needs: [Build_ARM_templates]
-    name: Deploy to TEST ADF
+    name: Deploy to PROD ADF
     runs-on: ubuntu-latest
     environment: TEST
     steps:
@@ -60,7 +60,7 @@ jobs:
           name: armtemplates
           path: armtemplates
 
-      - name: Deploy to TEST
+      - name: Deploy to PROD
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: rg_satheesh
