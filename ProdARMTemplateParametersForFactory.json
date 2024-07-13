@@ -4,6 +4,24 @@
     "parameters": {
         "factoryName": {
             "value": "prodadfjul"
+        },
+        "LS_AzureSqlDatabase_password": {
+            "value": ""
+        },
+        "LS_AzureDataLakeStorage_accountKey": {
+            "value": ""
+        },
+        "LS_AzureSqlDatabase_properties_typeProperties_server": {
+            "value": "testazuresqldbnew.database.windows.net"
+        },
+        "LS_AzureSqlDatabase_properties_typeProperties_database": {
+            "value": "testazuresqldb"
+        },
+        "LS_AzureSqlDatabase_properties_typeProperties_userName": {
+            "value": "sqladmin"
+        },
+        "LS_AzureDataLakeStorage_properties_typeProperties_url": {
+            "value": "https://satheeshstg1.dfs.core.windows.net/"
         }
     }
 }
