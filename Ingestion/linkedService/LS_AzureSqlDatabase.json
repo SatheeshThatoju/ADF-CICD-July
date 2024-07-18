@@ -5,13 +5,8 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"server": "testazuresqldbnew.database.windows.net",
-			"database": "testazuresqldb",
-			"encrypt": "mandatory",
-			"trustServerCertificate": true,
-			"authenticationType": "SQL",
-			"userName": "sqladmin",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDYxMTM4RkYzLTQzMDItNDFGNS05NjZGLTJGQTcxNUU4OTMxQV81OTQ1MDRmMC0wZGY4LTQxMmMtODhkYy03NjY2Mzc1MGVmNWUiDQp9"
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=testazuresqldbnew.database.windows.net;initial catalog=testazuresqldb;user id=sqladmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDYxMTM4RkYzLTQzMDItNDFGNS05NjZGLTJGQTcxNUU4OTMxQV9kYTM0Mjk3Ny1iMDgyLTQ2MjYtYmUzYy00OTU5MTc0ZmE0MjQiDQp9"
 		}
 	}
 }
