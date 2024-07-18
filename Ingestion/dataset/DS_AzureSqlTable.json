@@ -2,36 +2,15 @@
 	"name": "DS_AzureSqlTable",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_AzureSqlDatabase",
+			"referenceName": "LS_AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "table_name",
-				"type": "varchar"
-			},
-			{
-				"name": "source_name",
-				"type": "varchar"
-			},
-			{
-				"name": "table_type",
-				"type": "varchar"
-			},
-			{
-				"name": "incremental_col",
-				"type": "varchar"
-			},
-			{
-				"name": "ingestion_dt",
-				"type": "varchar"
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "cntrl_tbl"
+			"table": "Customerdata"
 		}
 	}
 }
