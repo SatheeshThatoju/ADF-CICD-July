@@ -3,15 +3,26 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Wait1",
-				"type": "Wait",
+				"name": "Set variable1",
+				"type": "SetVariable",
 				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"waitTimeInSeconds": 20
+					"variableName": "hi",
+					"value": ""
 				}
 			}
 		],
+		"variables": {
+			"hi": {
+				"type": "String",
+				"defaultValue": "Hello"
+			}
+		},
 		"annotations": []
 	}
 }
